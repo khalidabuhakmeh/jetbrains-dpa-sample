@@ -1,0 +1,13 @@
+@page
+@model PerformanceIssues.Pages.Samples.DbCommandTime
+
+<h1>DbCommand Time</h1>
+
+<p>
+    🐢 This page is executing a slow database command.
+</p>
+
+<div hx-trigger="load" hx-get="@Url.Page("DbCommandTime", "Slow")" hx-swap="outerHTML" hx-indicator=".spinner-border">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Querying Database... (This will take some time, be patient)
+</div>

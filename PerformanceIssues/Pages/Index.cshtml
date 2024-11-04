@@ -1,0 +1,164 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script>
+    function runAllSamples() {
+        // Get all links in the list group
+        const links = document.querySelectorAll(".list-group-item");
+        const spinner = document.getElementById("spinner");
+        spinner.classList.remove("visually-hidden");
+        const promises = [];
+
+        // Create a container to hold the iframes (hidden by default)
+        const iframeContainer = document.createElement("div");
+        iframeContainer.style.display = "none";
+        document.body.appendChild(iframeContainer);
+
+        // Iterate over each link and create an iframe for it
+        links.forEach(function (link, index) {
+            const href = link.getAttribute("href");
+            if (href) {
+                // Create a promise for each iframe that resolves when it loads
+                const iframePromise = new Promise(function (resolve, reject) {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = href;
+                    iframe.onload = function () {
+                        resolve(iframe);
+                    };
+                    iframe.onerror = function () {
+                        reject(new Error('Failed to load iframe for ' + href));
+                    };
+                    iframeContainer.appendChild(iframe);
+                });
+                promises.push(iframePromise);
+            }
+        });
+
+        // Execute all iframe load promises
+        Promise.all(promises).then(function (iframes) {
+            console.log("All iframes loaded", iframes);
+            spinner.classList.add("visually-hidden");
+            alert("Please stop the application and open your IDE's DPA tool window to see the results.")
+        }).catch(function (error) {
+            console.error("Error loading iframes", error);
+            spinner.classList.add("visually-hidden");
+        });
+    }
+</script>
+
+<div class="text-center mb-3 ">
+    <h1 class="display-4 py-3 border-bottom border-5 mb-2">
+        🏃‍♂️Performance Issues
+    </h1>
+
+    <p>
+        This page has many samples that will trigger performance issues
+        according to JetBrains Rider's and ReSharper's dynamic performance analysis (DPA).
+        If you don't see issues in DPA, please double-check your thresholds and whether
+        DPA is enabled for your project and 
+        <span class="fw-bold">run your project without debugging.</span>
+    </p>
+    
+    <p>
+        Click the button below to run all samples at once and then open your IDE's DPA
+        tool window to see the results. You can also click each sample link to run them
+        individually.
+    </p>
+
+    <div class="my-3">
+        <button class="btn btn-primary" type="button" onclick="runAllSamples()">
+            <span id="spinner" class="spinner-border spinner-border-sm visually-hidden" aria-hidden="true"></span>
+            <span role="status">Run All Samples</span>
+        </button>
+    </div>
+    
+</div>
+
+
+
+<div class="list-group">
+    <a asp-page="/Samples/Closures" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Closure Objects</h5>
+        </div>
+        <p class="mb-1">
+            Closure occurs when you pass some context to a lambda expression or a LINQ query.
+            To process a closure, compiler creates a special class and a delegate method:
+            <span class="badge text-bg-light">&lt;&gt;c__DisplayClass</span>... and <span class="badge text-bg-light">Func&lt;...&gt;</span>.
+            Note that a LINQ also generates an enumerator each time you call it.
+        </p>
+    </a>
+
+    <a asp-page="/Samples/LOH" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Large Object Heap</h5>
+        </div>
+        <p class="mb-1">
+            Objects are larger than 85 KB are placed in a separate segment of the managed heap called Large Object Heap
+            (LOH).
+        </p>
+    </a>
+
+    <a asp-page="/Samples/SOH" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Small Object Heap</h5>
+        </div>
+        <p class="mb-1">
+            The alternative name for this issue type is "Uncategorized".
+            Strictly speaking, it includes all memory allocations made by an
+            application that exceed the Small Object Heap threshold.
+        </p>
+    </a>
+
+    <a asp-page="/Samples/DbCommandTime" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">DB Command Time</h5>
+        </div>
+        <p class="mb-1">
+            Flag database commands that exceed the command time threshold.
+        </p>
+    </a>
+
+    <a asp-page="/Samples/DbConnections" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">DB Connections</h5>
+        </div>
+        <p class="mb-1">
+            Flag database connections that exceed the connection limit threshold.
+        </p>
+    </a>
+
+    <a asp-page="/Samples/DbCommands" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">DB Commands</h5>
+        </div>
+        <p class="mb-1">
+            Flag database commands that exceed the command limit threshold.
+        </p>
+    </a>
+
+    <a asp-page="/Samples/DbRecords" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">DB Records</h5>
+        </div>
+        <p class="mb-1">
+            Flag database records that exceed the records limit threshold.
+        </p>
+    </a>
+
+    <a asp-page="/Samples/AspIssues" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">ASP Issues</h5>
+        </div>
+        <p class="mb-1">
+            Flag MVC Actions, Razor Page Handlers, and Razor View Components
+            that exceed the execution time limit threshold.
+        </p>
+    </a>
+</div>
+
+
+

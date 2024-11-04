@@ -1,0 +1,25 @@
+@page
+@model PerformanceIssues.Pages.Samples.AspIssues
+
+
+<h1>MVC Action</h1>
+
+<p>
+    🐢 This page is executing a slow MVC Action, a slow Razor Page Handler, and slow ViewComponent.
+</p>
+
+<div hx-trigger="load" hx-get="@Url.Action("Index", "Slow")" hx-swap="outerHTML" hx-indicator=".spinner-border">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading... (This will take about 5 seconds, be patient)
+</div>
+
+<div hx-trigger="load" hx-get="@Url.Page("AspIssues", "Slow")" hx-swap="outerHTML" hx-indicator=".spinner-border">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading... (This will take about 5 seconds, be patient)
+</div>
+
+<div hx-trigger="load" hx-get="@Url.Action("WithViewComponent", "Slow")" hx-swap="outerHTML" hx-indicator=".spinner-border">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading... (This will take about 5 seconds, be patient)
+</div>
+

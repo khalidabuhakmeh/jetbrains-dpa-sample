@@ -1,0 +1,16 @@
+@page
+@model PerformanceIssues.Pages.Samples.Closures
+
+
+<h1>Closures</h1>
+
+<p>
+    🐢 This page is executing code with a closure capture issue.
+</p>
+
+<ul>
+    @foreach (var fruit in Model.Fruits)
+    {
+        <li>@fruit</li>
+    }
+</ul>
