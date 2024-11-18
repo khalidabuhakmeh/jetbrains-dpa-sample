@@ -1,0 +1,23 @@
+@page
+@model PerformanceIssues.Pages.Samples.CustomMetrics
+
+
+<p>
+    In the "Settings | Build, Execution, Deployment | Dynamic Program Analysis | Monitoring"
+    add a custom metric with a name of "Dice" to see the values in the Monitoring Tool Window.
+</p>
+
+<p>
+    Click the button to attempt a dice roll while looking
+    at JetBrains Rider's Monitoring tool window.
+</p>
+
+<p>
+    🎲 You rolled "@Model.Result"!
+</p>
+
+<form method="get">
+    <button type="submit" value="Submit" class="btn btn-primary">
+        ⚖ Click Me for Custom Metrics
+    </button>
+</form>

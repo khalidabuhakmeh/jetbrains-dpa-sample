@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using PerformanceIssues.Models;
+using PerformanceIssues.Pages.Samples;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,26 @@ builder.Services.AddDbContext<Database>(options => {
 },
     // allow connections to get out of control
     ServiceLifetime.Transient);
+
+const string serviceName = "PerformanceIssues";
+
+builder.Logging.AddOpenTelemetry(options => {
+    options
+        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
+        .AddConsoleExporter();
+});
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService(serviceName))
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        // .AddConsoleExporter()
+    )
+    .WithMetrics(metrics => metrics
+        .AddAspNetCoreInstrumentation()
+        .AddMeter(CustomMetrics.MeterName)
+        // .AddConsoleExporter()
+    );
 
 var app = builder.Build();
 

@@ -13,4 +13,10 @@
 	<s:Int64 x:Key="/Default/Dpa/Thresholds/=SqlCommandDuration/@EntryIndexedValue">1000000</s:Int64>
 	<s:Int64 x:Key="/Default/Dpa/Thresholds/=SqlConnectionCount/@EntryIndexedValue">2</s:Int64>
 	<s:Int64 x:Key="/Default/Dpa/Thresholds/=SqlRecordCount/@EntryIndexedValue">100</s:Int64>
-	<s:Boolean x:Key="/Default/Monitoring/Counters/=Microsoft_002EEntityFrameworkCore/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/Monitoring/Counters/=Microsoft_002EAspNetCore_002EHosting/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Monitoring/Counters/=Microsoft_002EEntityFrameworkCore/@EntryIndexedValue">True</s:Boolean>
+	
+	<s:Boolean x:Key="/Default/Monitoring/Metrics/=Dice/@EntryIndexedValue">True</s:Boolean>
+	
+	
+	</wpf:ResourceDictionary>
