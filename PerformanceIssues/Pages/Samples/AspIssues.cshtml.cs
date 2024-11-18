@@ -13,6 +13,7 @@ public class AspIssues : PageModel
     {
         await Task.Delay(5_000);
 
+        // lang=html
         return Content("""
                        <div class="fs-1">
                         And We're Back From The Razor Page Handler!
